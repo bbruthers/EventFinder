@@ -9,13 +9,17 @@
     <link href="Content/site.css" rel="stylesheet" />
     <script src="Scripts/jquery-3.1.1.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/map.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=*apikeyhere*&callback=initMap"></script>
+
     <title></title>
 </head>
 <body>
     <div class="container">
-        <header class="jumbotron"></header>
         <form id="form1" runat="server">
-
+            <header class="jumbotron">
+                <div id="map"></div>
+            </header>
         </form>
     </div>
 </body>
