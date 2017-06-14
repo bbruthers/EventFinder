@@ -14,7 +14,7 @@ function getLocation()
     }
 }
 
-function applyCurrLocation(position)
+var applyCurrLocation = function(position)
 {
     currLocation.lat = position.coords.latitude;
     currLocation.lng = position.coords.longitude;
@@ -23,18 +23,20 @@ function applyCurrLocation(position)
     document.getElementById('navLng').innerHTML = "navLng: " + currLocation.lng;
 }
 
+getLocation();
+
 function initMap()
 {
-    var uluru =
+    /*var uluru =
         {
             lat: 39.8429,
             lng: 75.0336
-        };
+        }; */
 
     var map = new google.maps.Map(document.getElementById('map'),
         {
             zoom: 10,
-            center: uluru
+            center: currLocation
         });
 
     map.addListener('click', function (e)
