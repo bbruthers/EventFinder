@@ -28,6 +28,13 @@
             <div id="lng">
                 Longitude: Null
             </div>
+
+            <div id="navLat">
+                Nav Lat: 
+            </div>
+            <div id="navLng">
+                Nav Lng: 
+            </div>
         </form>
     </div>
 </body>

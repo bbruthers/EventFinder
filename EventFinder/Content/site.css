@@ -23,7 +23,7 @@ body
     margin-top: 5em;
 }
 
-#lat, #lng
+#lat, #lng, #navLat, #navLng
 {
     float: left;
     display: inline;

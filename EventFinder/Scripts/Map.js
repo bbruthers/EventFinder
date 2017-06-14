@@ -1,4 +1,29 @@
-﻿function initMap()
+﻿var map, marker;
+var currLocation = {lat: 0.0, lng: 0.0};
+
+//get current user location
+function getLocation()
+{
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(applyCurrLocation);
+    }
+    else
+    {
+        document.getElementById('navLat').innerHTML = "Cannot get location";
+    }
+}
+
+function applyCurrLocation(position)
+{
+    currLocation.lat = position.coords.latitude;
+    currLocation.lng = position.coords.longitude;
+
+    document.getElementById('navLat').innerHTML = "navLat: " + currLocation.lat;
+    document.getElementById('navLng').innerHTML = "navLng: " + currLocation.lng;
+}
+
+function initMap()
 {
     var uluru =
         {
@@ -17,13 +42,21 @@
         placeMarkerAndPanTo(e.latLng, map);
     });
 
-    //https://stackoverflow.com/questions/3684274/googlemaps-v3-api-create-only-1-marker-on-click
+    function AlertRightClick()
+    {
+        confirm("Test");
+    }
 
-    var marker;
+    /*map.addListener(marker, 'rightclick', function (e)
+    {
+        confirm("Marker clicked");
+    }); */
+
+    //https://stackoverflow.com/questions/3684274/googlemaps-v3-api-create-only-1-marker-on-click
 
     function placeMarkerAndPanTo(latLng, map)
     {
-        if (marker)
+        if (marker != null)
         {
             marker.setPosition(latLng);
         }
@@ -34,6 +67,8 @@
                 position: latLng,
                 map: map
             });
+
+            marker.addListener('rightclick', AlertRightClick());
 
             map.panTo(marker.position);
         }
