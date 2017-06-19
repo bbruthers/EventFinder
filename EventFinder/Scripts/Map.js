@@ -1,81 +1,49 @@
-﻿var map, marker;
-var currLocation = {lat: 0.0, lng: 0.0};
+﻿var map, infoWindow;
+var currLocation = { lat: 0.0, lng: 0.0 };
 
-//get current user location
-function getLocation()
-{
-    if (navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(applyCurrLocation);
-    }
-    else
-    {
-        document.getElementById('navLat').innerHTML = "Cannot get location";
-    }
-}
-
-var applyCurrLocation = function(position)
-{
-    currLocation.lat = position.coords.latitude;
-    currLocation.lng = position.coords.longitude;
-
-    document.getElementById('navLat').innerHTML = "navLat: " + currLocation.lat;
-    document.getElementById('navLng').innerHTML = "navLng: " + currLocation.lng;
-}
-
-getLocation();
 
 function initMap()
 {
-    /*var uluru =
+    map = new google.maps.Map(document.getElementById('map'),
         {
-            lat: 39.8429,
-            lng: 75.0336
-        }; */
-
-    var map = new google.maps.Map(document.getElementById('map'),
-        {
-            zoom: 10,
-            center: currLocation
+            center: { lat: 0.0, lng: 0.0 },
+            zoom: 15
         });
 
-    map.addListener('click', function (e)
-    {
-        placeMarkerAndPanTo(e.latLng, map);
-    });
+    infoWindow = new google.maps.InfoWindow;
 
-    function AlertRightClick()
+    function applyGeoLocation(position)
     {
-        confirm("Test");
+        currLocation.lat = position.coords.latitude;
+        currLocation.lng = position.coords.longitude;
+
+        document.getElementById('navLat').innerHTML = "navLat: " + currLocation.lat;
+        document.getElementById('navLng').innerHTML = "navLng: " + currLocation.lng;
+
+        infoWindow.setPosition(currLocation);
+        infoWindow.setContent('Estimated location');
+        infoWindow.open(map);
+
+        map.setCenter(currLocation);
     }
 
-    /*map.addListener(marker, 'rightclick', function (e)
+    // Try HTML5 geolocation.
+    if (navigator.geolocation)
     {
-        confirm("Marker clicked");
-    }); */
-
-    //https://stackoverflow.com/questions/3684274/googlemaps-v3-api-create-only-1-marker-on-click
-
-    function placeMarkerAndPanTo(latLng, map)
-    {
-        if (marker != null)
-        {
-            marker.setPosition(latLng);
-        }
-        else
-        {
-            marker = new google.maps.Marker
-            ({
-                position: latLng,
-                map: map
-            });
-
-            marker.addListener('rightclick', AlertRightClick());
-
-            map.panTo(marker.position);
-        }
-
-        document.getElementById('lat').innerHTML = "Latitude: " + marker.getPosition().lat();
-        document.getElementById('lng').innerHTML = "Longitude: " + marker.getPosition().lng();
+        navigator.geolocation.getCurrentPosition(applyGeoLocation);
     }
+    else
+    {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos)
+{
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 }
