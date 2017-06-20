@@ -1,4 +1,4 @@
-﻿var map, infoWindow;
+﻿var map, infoWindow, marker;
 var currLocation = { lat: 0.0, lng: 0.0 };
 
 
@@ -9,6 +9,11 @@ function initMap()
             center: { lat: 0.0, lng: 0.0 },
             zoom: 15
         });
+
+    map.addListener('click', function (e)
+    {
+        placeMakerandPan(e.latLng, map);
+    });
 
     infoWindow = new google.maps.InfoWindow;
 
@@ -37,13 +42,40 @@ function initMap()
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos)
+    {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
+    function placeMakerandPan(latLng, map)
+    {
+        if (marker != null)
+        {
+            marker.setPosition(latLng);
+            map.panTo(marker.position);
+        }
+        else
+        {
+
+            marker = new google.maps.Marker
+                ({
+                    position: latLng,
+                    map: map
+                });
+
+            //marker.addListener('rightclick', AlertRightClick());
+
+            map.panTo(marker.position);
+        }
+
+        document.getElementById('lat').innerHTML = "Latitude: " + marker.getPosition().lat();
+        document.getElementById('lng').innerHTML = "Longitude: " + marker.getPosition().lng();
+    }
+
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos)
-{
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-}
