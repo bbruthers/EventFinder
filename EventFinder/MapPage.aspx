@@ -21,21 +21,17 @@
             <div class="jumbotron">
                 <div id="map"></div>
             </div>
-
-            <div id="lat">
-                Latitude: Null
-            </div>
-            <div id="lng">
-                Longitude: Null
-            </div>
-
             <div id="navLat">
                 Nav Lat: 
             </div>
             <div id="navLng">
                 Nav Lng: 
             </div>
+
+            <asp:HiddenField ID="hfLatitude" runat="server" />
+            <asp:HiddenField ID="hfLongitude" runat="server" />
         </form>
     </div>
+    
 </body>
 </html>

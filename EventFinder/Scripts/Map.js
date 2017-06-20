@@ -73,8 +73,8 @@ function initMap()
             map.panTo(marker.position);
         }
 
-        document.getElementById('lat').innerHTML = "Latitude: " + marker.getPosition().lat();
-        document.getElementById('lng').innerHTML = "Longitude: " + marker.getPosition().lng();
+        document.getElementById('hfLatitude').innerHTML = marker.getPosition().lat();
+        document.getElementById('hfLongitude').innerHTML = marker.getPosition().lng();
     }
 
 }
