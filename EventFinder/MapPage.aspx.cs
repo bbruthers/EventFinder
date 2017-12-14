@@ -13,5 +13,10 @@ namespace EventFinder
         {
 
         }
+
+        protected void hfLatitude_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

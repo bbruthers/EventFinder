@@ -9,13 +9,14 @@
     <link href="Content/site.css" rel="stylesheet" />
     <script src="Scripts/jquery-3.1.1.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/history.js"></script>
     <script src="Scripts/map.js"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC72GyDR9YJ8Rs4x0URTiEuf1dehhHSyro&callback=initMap"></script>
 
     <title>Title</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <form id="form1" runat="server">
             <header>Header text</header>
             <div class="jumbotron">
@@ -27,9 +28,13 @@
             <div id="navLng">
                 Nav Lng: 
             </div>
+            <div>
+                <asp:HiddenField ID="hfLatitude" runat="server" OnValueChanged="hfLatitude_ValueChanged" />
+                <asp:HiddenField ID="hfLongitude" runat="server" />
+            </div>
+            <div id="tablesec">
 
-            <asp:HiddenField ID="hfLatitude" runat="server" />
-            <asp:HiddenField ID="hfLongitude" runat="server" />
+            </div>
         </form>
     </div>
     

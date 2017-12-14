@@ -1,7 +1,6 @@
 ﻿var map, infoWindow, marker;
 var currLocation = { lat: 0.0, lng: 0.0 };
 
-
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'),
@@ -22,8 +21,8 @@ function initMap()
         currLocation.lat = position.coords.latitude;
         currLocation.lng = position.coords.longitude;
 
-        document.getElementById('navLat').innerHTML = "navLat: " + currLocation.lat;
-        document.getElementById('navLng').innerHTML = "navLng: " + currLocation.lng;
+        document.getElementById('navLat').innerHTML = "Location Latitude: " + currLocation.lat;
+        document.getElementById('navLng').innerHTML = "Location Longitude: " + currLocation.lng;
 
         infoWindow.setPosition(currLocation);
         infoWindow.setContent('Estimated location');
@@ -73,9 +72,10 @@ function initMap()
             map.panTo(marker.position);
         }
 
-        document.getElementById('hfLatitude').innerHTML = marker.getPosition().lat();
-        document.getElementById('hfLongitude').innerHTML = marker.getPosition().lng();
+       var strl = document.getElementById('hfLatitude').innerHTML = marker.getPosition().lat();
+       var strln = document.getElementById('hfLongitude').innerHTML = marker.getPosition().lng();
+
+        CreateHistTable(strl, strln);
     }
 
 }
-
