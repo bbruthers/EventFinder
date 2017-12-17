@@ -1,7 +1,14 @@
 ﻿function CreateHistTable(plat, plong)
 {
     var tablearea = document.getElementById('tablesec');
-    var table = document.createElement('table');
+    //var table = document.createElement('table');
+    var table = document.getElementById('histTable');
+
+    if (table === null)
+    {
+        table = document.createElement('table');
+        table.id = 'histTable';
+    }
 
     var tablerow = document.createElement('tr');
     var td1 = document.createElement('td');
@@ -17,5 +24,5 @@
 
     table.appendChild(tablerow);
 
-    document.body.appendChild(table);
+    tablearea.appendChild(table);
 }

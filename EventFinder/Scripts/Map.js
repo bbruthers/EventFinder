@@ -1,81 +1,75 @@
-﻿var map, infoWindow, marker;
-var currLocation = { lat: 0.0, lng: 0.0 };
+﻿function initMap() {
+    var marker;
+    var infoWindow = new google.maps.InfoWindow;
 
-function initMap()
-{
-    map = new google.maps.Map(document.getElementById('map'),
+    var map = new google.maps.Map(document.getElementById('map'),
         {
             center: { lat: 0.0, lng: 0.0 },
             zoom: 15
         });
 
-    map.addListener('click', function (e)
-    {
-        placeMakerandPan(e.latLng, map);
-    });
 
-    infoWindow = new google.maps.InfoWindow;
+    //attempt to get browser's geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, navError);
 
-    function applyGeoLocation(position)
-    {
-        currLocation.lat = position.coords.latitude;
-        currLocation.lng = position.coords.longitude;
-
-        document.getElementById('navLat').innerHTML = "Location Latitude: " + currLocation.lat;
-        document.getElementById('navLng').innerHTML = "Location Longitude: " + currLocation.lng;
-
-        infoWindow.setPosition(currLocation);
-        infoWindow.setContent('Estimated location');
-        infoWindow.open(map);
-
-        map.setCenter(currLocation);
     }
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(applyGeoLocation);
-    }
-    else
-    {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
-    function handleLocationError(browserHasGeolocation, infoWindow, pos)
-    {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-    }
-
-    function placeMakerandPan(latLng, map)
-    {
-        if (marker != null)
-        {
-            marker.setPosition(latLng);
+    map.addListener('click', function (e) {
+        if (marker != null) {
+            marker.setPosition(e.latLng);
             map.panTo(marker.position);
         }
-        else
-        {
-
+        else {
             marker = new google.maps.Marker
                 ({
-                    position: latLng,
+                    position: e.latLng,
                     map: map
                 });
 
-            //marker.addListener('rightclick', AlertRightClick());
-
             map.panTo(marker.position);
         }
 
-       var strl = document.getElementById('hfLatitude').innerHTML = marker.getPosition().lat();
-       var strln = document.getElementById('hfLongitude').innerHTML = marker.getPosition().lng();
-
+        var strl = document.getElementById('hfLatitude').innerHTML = marker.getPosition().lat();
+        var strln = document.getElementById('hfLongitude').innerHTML = marker.getPosition().lng();
         CreateHistTable(strl, strln);
+    });
+
+    
+
+    //**navigator geolocal callbacks **
+    function success(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        map.setCenter(new google.maps.LatLng(latitude, longitude));
+
+        document.getElementById('navLat').innerHTML = "Location Latitude: " + latitude;
+        document.getElementById('navLng').innerHTML = "Location Longitude: " + longitude;
+
+        infoWindow.setPosition(new google.maps.LatLng(latitude, longitude));
+        infoWindow.setContent('Estimated location (using browser geolocation)');
+        
+        infoWindow.open(map);
+    }
+
+    function navError(error) {
+        var message = "";
+
+        // Check for known errors
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                message = "This website does not have your permission to use the Geolocation API";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                message = "Your current position could not be determined.";
+                break;
+            case error.PERMISSION_DENIED_TIMEOUT:
+                message = "Your current position could not be determined within the specified timeout period.";
+                break;
+        }
+
+        infoWindow.setContent(message);
     }
 
 }

@@ -11,7 +11,7 @@
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/history.js"></script>
     <script src="Scripts/map.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC72GyDR9YJ8Rs4x0URTiEuf1dehhHSyro&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC72GyDR9YJ8Rs4x0URTiEuf1dehhHSyro&callback=initMap" async></script>
 
     <title>Title</title>
 </head>
