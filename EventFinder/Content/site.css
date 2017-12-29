@@ -29,3 +29,11 @@ body
     display: inline;
     width: 49%;
 }
+
+table tr:nth-child(even){
+    background-color: gold;
+}
+
+table tr:nth-child(odd){
+    background-color: red;
+}

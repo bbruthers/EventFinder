@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/site.css" rel="stylesheet" />
     <script src="Scripts/jquery-3.1.1.js"></script>
@@ -16,8 +16,9 @@
     <title>Title</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <form id="form1" runat="server">
+
+    <form id="form1" runat="server">
+        <div class="container-fluid">
             <header>Header text</header>
             <div class="jumbotron">
                 <div id="map"></div>
@@ -33,10 +34,9 @@
                 <asp:HiddenField ID="hfLongitude" runat="server" />
             </div>
             <div id="tablesec">
-
+                <!-- map coordinates js generated table -->
             </div>
-        </form>
-    </div>
-    
+        </div>
+    </form>
 </body>
 </html>

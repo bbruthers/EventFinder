@@ -3,14 +3,25 @@
     var tablearea = document.getElementById('tablesec');
     //var table = document.createElement('table');
     var table = document.getElementById('histTable');
+    var tablebody = document.getElementById('histTBody');
 
     if (table === null)
     {
         table = document.createElement('table');
         table.id = 'histTable';
+
+        table.classList.add("table-responsive");
+        table.classList.add('table-striped');
+        table.classList.add('histTable');
+        
+        tablebody = document.createElement('tbody');
+        tablebody.id = 'histTBody';
+        table.appendChild(tablebody);
+        
     }
 
     var tablerow = document.createElement('tr');
+    tablerow.onmousedown = TraverseHistoricalPin;
     var td1 = document.createElement('td');
     var td2 = document.createElement('td');
 
@@ -22,7 +33,12 @@
     tablerow.appendChild(td1);
     tablerow.appendChild(td2);
 
-    table.appendChild(tablerow);
+    tablebody.appendChild(tablerow);
 
     tablearea.appendChild(table);
+}
+
+function TraverseHistoricalPin()
+{
+    alert("");
 }
